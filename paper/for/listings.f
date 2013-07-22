@@ -546,25 +546,26 @@ module solver_mpdata_m
               C_corr => this%tmp(1) ! even step
             end if
 
-            ! calculating the antidiffusive velo
-            ptr => pi(0, C_corr%at( 0 )%p%a, im+h, j)
-            ptr = mpdata_C_adf(                        &
-              0, psi%at( n )%p%a, im, j, C_unco        &
-            )      
-            call bcy%fill_halos(                       &
-              C_corr%at(0)%p%a, ext(i, h)              &
-            )
+            ! ! calculating the antidiffusive velo
+            ! ptr => pi(0, C_corr%at( 0 )%p%a, im+h, j)
+            ! ptr = mpdata_C_adf(                        &
+            !   0, psi%at( n )%p%a, im, j, C_unco        &
+            ! )      
+            ! call bcy%fill_halos(                       &
+            !   C_corr%at(0)%p%a, ext(i, h)              &
+            ! )
 
-            ptr => pi(0, C_corr%at( 1 )%p%a, i, jm+h)
-            ptr = mpdata_C_adf(                        &
-              1, psi%at( n )%p%a, jm, i, C_unco        &
-            )
-            call bcx%fill_halos(                       &
-              C_corr%at(1)%p%a, ext(j, h)              &
-            )
+            ! ptr => pi(0, C_corr%at( 1 )%p%a, i, jm+h)
+            ! ptr = mpdata_C_adf(                        &
+            !   1, psi%at( n )%p%a, jm, i, C_unco        &
+            ! )
+            ! call bcx%fill_halos(                       &
+            !   C_corr%at(1)%p%a, ext(j, h)              &
+            ! )
 
             ! donor-cell step
-            call donorcell_op(psi, n, C_corr, i, j) 
+            ! call donorcell_op(psi, n, C_corr, i, j) 
+            call donorcell_op(psi, n, this%C, i, j)
           end block
         end if
       end do
