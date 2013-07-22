@@ -290,31 +290,32 @@ struct solver_mpdata : solver<bcx_t, bcy_t>
           this->psi[this->n], ext(this->i, this->hlo)
         );
 
-        // choosing input/output for antidiff C
-        const arrvec_t 
-          &C_unco = (step == 1) 
-            ? this->C 
-            : (step % 2) 
-              ? tmp[1]  // odd steps
-              : tmp[0], // even steps
-          &C_corr = (step  % 2) 
-            ? tmp[0]    // odd steps
-            : tmp[1];   // even steps
+        // // choosing input/output for antidiff C
+        // const arrvec_t 
+        //   &C_unco = (step == 1) 
+        //     ? this->C 
+        //     : (step % 2) 
+        //       ? tmp[1]  // odd steps
+        //       : tmp[0], // even steps
+        //   &C_corr = (step  % 2) 
+        //     ? tmp[0]    // odd steps
+        //     : tmp[1];   // even steps
 
-        // calculating the antidiffusive C 
-        C_corr[0](im+h, this->j) = mpdata_C_adf<0>(
-          this->psi[this->n], im, this->j, C_unco
-        );
-        this->bcy.fill_halos(C_corr[0], ext(this->i,h));
+        // // calculating the antidiffusive C 
+        // C_corr[0](im+h, this->j) = mpdata_C_adf<0>(
+        //   this->psi[this->n], im, this->j, C_unco
+        // );
+        // this->bcy.fill_halos(C_corr[0], ext(this->i,h));
 
-        C_corr[1](this->i, jm+h) = mpdata_C_adf<1>(
-          this->psi[this->n], jm, this->i, C_unco
-        );
-        this->bcx.fill_halos(C_corr[1], ext(this->j,h));
+        // C_corr[1](this->i, jm+h) = mpdata_C_adf<1>(
+        //   this->psi[this->n], jm, this->i, C_unco
+        // );
+        // this->bcx.fill_halos(C_corr[1], ext(this->j,h));
 
         // donor-cell step 
         donorcell_op(
-          this->psi, this->n, C_corr, this->i, this->j
+					// this->psi, this->n, C_corr, this->i, this->j
+          this->psi, this->n, this->C, this->i, this->j
         );
       }
     }
