@@ -222,24 +222,25 @@ class solver_mpdata(solver):
         self.bcy.fill_halos(
           self.psi[self.n], ext(self.i, self.hlo)
         )
-        if step == 1:
-          C_unco, C_corr = self.C, self.tmp[0]
-        elif step % 2:
-          C_unco, C_corr = self.tmp[1], self.tmp[0]
-        else:
-          C_unco, C_corr = self.tmp[0], self.tmp[1]
+        # if step == 1:
+        #   C_unco, C_corr = self.C, self.tmp[0]
+        # elif step % 2:
+        #   C_unco, C_corr = self.tmp[1], self.tmp[0]
+        # else:
+        #   C_unco, C_corr = self.tmp[0], self.tmp[1]
 
-        C_corr[0][self.im+hlf, self.j] = mpdata_C_adf(
-          0, self.psi[self.n], self.im, self.j, C_unco
-        )
-        self.bcy.fill_halos(C_corr[0], ext(self.i, hlf))
+        # C_corr[0][self.im+hlf, self.j] = mpdata_C_adf(
+        #   0, self.psi[self.n], self.im, self.j, C_unco
+        # )
+        # self.bcy.fill_halos(C_corr[0], ext(self.i, hlf))
         
-        C_corr[1][self.i, self.jm+hlf] = mpdata_C_adf(
-          1, self.psi[self.n], self.jm, self.i, C_unco
-        )
-        self.bcx.fill_halos(C_corr[1], ext(self.j, hlf))
+        # C_corr[1][self.i, self.jm+hlf] = mpdata_C_adf(
+        #   1, self.psi[self.n], self.jm, self.i, C_unco
+        # )
+        # self.bcx.fill_halos(C_corr[1], ext(self.j, hlf))
 
         donorcell_op(
-          self.psi, self.n, C_corr, self.i, self.j
+          # self.psi, self.n, C_corr, self.i, self.j
+          self.psi, self.n, self.C, self.i, self.j
         )
 #listing19
