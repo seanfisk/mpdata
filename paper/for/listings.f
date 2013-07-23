@@ -531,20 +531,21 @@ module solver_mpdata_m
           )
 
           block
-            class(arrvec_t), pointer :: C_corr, C_unco
+            ! class(arrvec_t), pointer :: C_corr, C_unco
+            class(arrvec_t), pointer :: C
             real(real_t), pointer :: ptr(:,:)
 
             ! chosing input/output for antidiff. C
-            if (step == 1) then
-              C_unco => this%C
-              C_corr => this%tmp(0)
-            else if (mod(step, 2) == 1) then
-              C_unco => this%tmp(1) ! odd step
-              C_corr => this%tmp(0) ! even step
-            else
-              C_unco => this%tmp(0) ! odd step
-              C_corr => this%tmp(1) ! even step
-            end if
+            ! if (step == 1) then
+            !   C_unco => this%C
+            !   C_corr => this%tmp(0)
+            ! else if (mod(step, 2) == 1) then
+            !   C_unco => this%tmp(1) ! odd step
+            !   C_corr => this%tmp(0) ! even step
+            ! else
+            !   C_unco => this%tmp(0) ! odd step
+            !   C_corr => this%tmp(1) ! even step
+            ! end if
 
             ! ! calculating the antidiffusive velo
             ! ptr => pi(0, C_corr%at( 0 )%p%a, im+h, j)
@@ -565,7 +566,8 @@ module solver_mpdata_m
 
             ! donor-cell step
             ! call donorcell_op(psi, n, C_corr, i, j) 
-            call donorcell_op(psi, n, this%C, i, j)
+            C => this%C
+            call donorcell_op(psi, n, C, i, j)
           end block
         end if
       end do
